@@ -59,7 +59,6 @@ public class Main {
         return toReturn;
     }
 
-
     public static int fi(int p, int q) {
         return (p - 1) * (q - 1);
     }
@@ -92,14 +91,15 @@ public class Main {
 
         int firstHash = getHashCode(toEncrypt, p * q);
 
-        int fiN = fi(p, q);
-
         //contains d-exponent value
-        int[] secretKey = GCDex(fiN, e);
+        int[] secretKey = GCDex(fi(p, q), e);
         int d = secretKey[2];
         if (d < 0){
-            d += fiN;
+            d += fi(p, q);
         }
+
+        System.out.println("Close key = [" + d + ", " + p * q + "]");
+        System.out.println("Open key = [" + e + ", " + p * q + "]");
 
         int signature = fastPower(firstHash, d, p * q);
         System.out.println("Hash: " + firstHash + "\n" + "Signature: " + signature);
